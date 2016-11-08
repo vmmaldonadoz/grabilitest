@@ -1,1 +1,2 @@
-include ':app'
+include ':AppStore'
+project(':AppStore').projectDir = new File('app')

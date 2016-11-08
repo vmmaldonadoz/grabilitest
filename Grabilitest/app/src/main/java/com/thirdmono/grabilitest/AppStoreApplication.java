@@ -3,6 +3,7 @@ package com.thirdmono.grabilitest;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
+import com.squareup.leakcanary.LeakCanary;
 import com.thirdmono.grabilitest.data.logger.LoggerTree;
 
 import io.fabric.sdk.android.Fabric;
@@ -20,6 +21,7 @@ public class AppStoreApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         setupTimber();
+        setupLeakCanary();
     }
 
     private void setupTimber() {
@@ -29,5 +31,12 @@ public class AppStoreApplication extends MultiDexApplication {
         } else {
             Timber.plant(new LoggerTree());
         }
+    }
+
+    private void setupLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
     }
 }

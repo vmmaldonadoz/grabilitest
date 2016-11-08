@@ -23,10 +23,10 @@ public class AppStoreApplication extends MultiDexApplication {
     }
 
     private void setupTimber() {
+        Fabric.with(this, new Crashlytics());
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         } else {
-            Fabric.with(this, new Crashlytics());
             Timber.plant(new LoggerTree());
         }
     }

@@ -8,6 +8,9 @@ public class Link {
     @SerializedName("attributes")
     private LinkAttributes attributes;
 
+    public Link() {
+    }
+
     public LinkAttributes getAttributes() {
         return attributes;
     }

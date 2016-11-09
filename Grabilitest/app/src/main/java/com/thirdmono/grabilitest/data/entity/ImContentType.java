@@ -8,6 +8,9 @@ public class ImContentType {
     @SerializedName("attributes")
     private ContentTypeAttributes attributes;
 
+    public ImContentType() {
+    }
+
     public ContentTypeAttributes getAttributes() {
         return attributes;
     }

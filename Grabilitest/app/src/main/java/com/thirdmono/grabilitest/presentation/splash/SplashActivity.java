@@ -1,4 +1,4 @@
-package com.thirdmono.grabilitest.presentation;
+package com.thirdmono.grabilitest.presentation.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import com.facebook.rebound.SpringListener;
 import com.facebook.rebound.SpringSystem;
 import com.facebook.rebound.SpringUtil;
 import com.thirdmono.grabilitest.R;
+import com.thirdmono.grabilitest.presentation.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

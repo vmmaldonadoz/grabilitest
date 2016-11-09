@@ -8,6 +8,9 @@ public class Title {
     @SerializedName("label")
     private String label;
 
+    public Title() {
+    }
+
     public String getLabel() {
         return label;
     }

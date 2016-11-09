@@ -11,6 +11,9 @@ public class ImArtist {
     @SerializedName("attributes")
     private ArtistAttributes attributes;
 
+    public ImArtist() {
+    }
+
     public String getLabel() {
         return label;
     }

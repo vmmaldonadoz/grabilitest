@@ -10,6 +10,9 @@ public class ContentTypeAttributes {
     @SerializedName("label")
     private String label;
 
+    public ContentTypeAttributes() {
+    }
+
     public String getTerm() {
         return term;
     }

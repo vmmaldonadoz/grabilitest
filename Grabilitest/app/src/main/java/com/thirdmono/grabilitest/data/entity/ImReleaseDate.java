@@ -11,6 +11,9 @@ public class ImReleaseDate {
     @SerializedName("attributes")
     private ReleaseDateAttributes attributes;
 
+    public ImReleaseDate() {
+    }
+
     public String getLabel() {
         return label;
     }

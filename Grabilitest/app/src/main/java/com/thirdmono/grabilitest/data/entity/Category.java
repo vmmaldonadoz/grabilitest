@@ -8,6 +8,8 @@ public class Category {
     @SerializedName("attributes")
     private CategoryAttributes attributes;
 
+    public Category() {
+    }
 
     public CategoryAttributes getAttributes() {
         return attributes;

@@ -8,6 +8,9 @@ public class ReleaseDateAttributes {
     @SerializedName("label")
     private String label;
 
+    public ReleaseDateAttributes() {
+    }
+
     public String getLabel() {
         return label;
     }

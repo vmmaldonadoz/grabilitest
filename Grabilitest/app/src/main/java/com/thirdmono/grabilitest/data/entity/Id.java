@@ -11,6 +11,9 @@ public class Id {
     @SerializedName("attributes")
     private IdAttributes attributes;
 
+    public Id() {
+    }
+
     public String getLabel() {
         return label;
     }

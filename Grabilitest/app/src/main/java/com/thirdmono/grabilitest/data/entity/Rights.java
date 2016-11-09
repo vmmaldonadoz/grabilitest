@@ -8,6 +8,9 @@ public class Rights {
     @SerializedName("label")
     private String label;
 
+    public Rights() {
+    }
+
     public String getLabel() {
         return label;
     }

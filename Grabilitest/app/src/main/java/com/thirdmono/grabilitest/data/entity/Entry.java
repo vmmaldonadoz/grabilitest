@@ -12,7 +12,7 @@ public class Entry {
     private ImName imName;
 
     @SerializedName("im:image")
-    private List<ImImage> imImage = new ArrayList<ImImage>();
+    private List<ImImage> imImage = new ArrayList<>();
 
     @SerializedName("summary")
     private Summary summary;
@@ -43,6 +43,9 @@ public class Entry {
 
     @SerializedName("im:releaseDate")
     private ImReleaseDate imReleaseDate;
+
+    public Entry() {
+    }
 
     public ImName getImName() {
         return imName;

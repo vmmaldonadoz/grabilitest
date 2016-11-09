@@ -12,6 +12,9 @@ public class LinkAttributes {
     @SerializedName("href")
     private String href;
 
+    public LinkAttributes() {
+    }
+
     public String getRel() {
         return rel;
     }

@@ -11,6 +11,9 @@ public class ImImage {
     @SerializedName("attributes")
     private ImageAttributes imageAttributes;
 
+    public ImImage() {
+    }
+
     public String getLabel() {
         return label;
     }

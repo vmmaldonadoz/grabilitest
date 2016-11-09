@@ -10,6 +10,9 @@ public class IdAttributes {
     @SerializedName("im:bundleId")
     private String imBundleId;
 
+    public IdAttributes() {
+    }
+
     public String getImId() {
         return imId;
     }

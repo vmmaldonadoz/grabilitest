@@ -14,6 +14,9 @@ public class CategoryAttributes {
     @SerializedName("label")
     private String label;
 
+    public CategoryAttributes() {
+    }
+
     public String getImId() {
         return imId;
     }

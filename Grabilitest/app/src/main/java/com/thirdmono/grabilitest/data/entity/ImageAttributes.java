@@ -8,6 +8,9 @@ public class ImageAttributes {
     @SerializedName("height")
     private String height;
 
+    public ImageAttributes() {
+    }
+
     public String getHeight() {
         return height;
     }

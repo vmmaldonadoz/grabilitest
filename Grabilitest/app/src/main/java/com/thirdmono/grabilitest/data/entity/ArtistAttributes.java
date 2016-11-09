@@ -8,6 +8,9 @@ public class ArtistAttributes {
     @SerializedName("href")
     private String href;
 
+    public ArtistAttributes() {
+    }
+
     public String getHref() {
         return href;
     }

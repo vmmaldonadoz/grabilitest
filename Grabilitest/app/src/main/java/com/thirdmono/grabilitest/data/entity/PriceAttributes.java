@@ -10,6 +10,9 @@ public class PriceAttributes {
     @SerializedName("currency")
     private String currency;
 
+    public PriceAttributes() {
+    }
+
     public String getAmount() {
         return amount;
     }

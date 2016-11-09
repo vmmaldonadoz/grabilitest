@@ -11,6 +11,9 @@ public class ImPrice {
     @SerializedName("attributes")
     private PriceAttributes attributes;
 
+    public ImPrice() {
+    }
+
     public String getLabel() {
         return label;
     }

@@ -5,6 +5,8 @@ import android.support.multidex.MultiDexApplication;
 import com.crashlytics.android.Crashlytics;
 import com.squareup.leakcanary.LeakCanary;
 import com.thirdmono.grabilitest.data.logger.LoggerTree;
+import com.thirdmono.grabilitest.domain.di.AppComponent;
+import com.thirdmono.grabilitest.domain.di.DaggerAppComponent;
 
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
@@ -17,11 +19,14 @@ import timber.log.Timber;
  */
 public class AppStoreApplication extends MultiDexApplication {
 
+    private AppComponent appComponent;
+
     @Override
     public void onCreate() {
         super.onCreate();
         setupTimber();
         setupLeakCanary();
+        createAppComponent();
     }
 
     private void setupTimber() {
@@ -38,5 +43,14 @@ public class AppStoreApplication extends MultiDexApplication {
             return;
         }
         LeakCanary.install(this);
+    }
+
+    private void createAppComponent() {
+        appComponent = DaggerAppComponent.builder()
+                .build();
+    }
+
+    public AppComponent getAppComponent() {
+        return this.appComponent;
     }
 }

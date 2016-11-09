@@ -6,6 +6,7 @@ import com.crashlytics.android.Crashlytics;
 import com.squareup.leakcanary.LeakCanary;
 import com.thirdmono.grabilitest.data.logger.LoggerTree;
 import com.thirdmono.grabilitest.domain.di.AppComponent;
+import com.thirdmono.grabilitest.domain.di.AppModule;
 import com.thirdmono.grabilitest.domain.di.DaggerAppComponent;
 
 import io.fabric.sdk.android.Fabric;
@@ -47,6 +48,7 @@ public class AppStoreApplication extends MultiDexApplication {
 
     private void createAppComponent() {
         appComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
                 .build();
     }
 

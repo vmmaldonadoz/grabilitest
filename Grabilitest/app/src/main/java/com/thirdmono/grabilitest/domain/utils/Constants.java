@@ -9,6 +9,9 @@ package com.thirdmono.grabilitest.domain.utils;
 public class Constants {
 
     public final static String API_URL = "https://itunes.apple.com/";
-    public final static String QUERY = "us/rss/topfreeapplications/limit=20/json";
+    public final static String GENRE_KEY = "GENRE_KEY";
+    private final static int QUERY_LIMIT = 20;
+    public final static String QUERY = "us/rss/topfreeapplications/limit=" + QUERY_LIMIT + "/genre={" + GENRE_KEY + "}/json";
+
 
 }

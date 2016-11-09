@@ -5,6 +5,7 @@ import com.thirdmono.grabilitest.domain.utils.Constants;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 /**
  * API interface for retrieving the most popular apps in the App Store.
@@ -15,6 +16,6 @@ import retrofit2.http.GET;
 public interface FreeAppsService {
 
     @GET(Constants.QUERY)
-    Call<FeedWrapper> getFeedResponse();
+    Call<FeedWrapper> getFreeApplicationsByCategory(@Path(Constants.GENRE_KEY) String genre);
 
 }

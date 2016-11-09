@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeAPICall() {
-        freeAppsService.getFeedResponse().enqueue(new Callback<FeedWrapper>() {
+        freeAppsService.getFreeApplicationsByCategory("").enqueue(new Callback<FeedWrapper>() {
             @Override
             public void onResponse(Call<FeedWrapper> call, Response<FeedWrapper> response) {
                 Timber.d("Got some feed back!");

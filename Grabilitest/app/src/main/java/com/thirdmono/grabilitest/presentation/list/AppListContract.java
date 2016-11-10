@@ -1,11 +1,14 @@
 package com.thirdmono.grabilitest.presentation.list;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 
 import com.thirdmono.grabilitest.data.entity.CategoryFilter;
 import com.thirdmono.grabilitest.data.entity.Entry;
 import com.thirdmono.grabilitest.presentation.BasePresenter;
 import com.thirdmono.grabilitest.presentation.BaseView;
+import com.thirdmono.grabilitest.presentation.details.view.DetailsFragment;
 
 import java.util.List;
 
@@ -43,5 +46,11 @@ public interface AppListContract {
         void showErrorDuringRequestMessage();
 
         void showEmptyResponseMessage(CategoryFilter categoryFilter);
+
+        Context getActivity();
+
+        void startActivity(Intent intent);
+
+        void mountFragment(DetailsFragment fragment);
     }
 }

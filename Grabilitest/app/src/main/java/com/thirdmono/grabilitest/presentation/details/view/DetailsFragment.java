@@ -1,19 +1,25 @@
 package com.thirdmono.grabilitest.presentation.details.view;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.BroadcastReceiver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.thirdmono.grabilitest.AppStoreApplication;
 import com.thirdmono.grabilitest.R;
-import com.thirdmono.grabilitest.presentation.details.AppDetailsContract;
+import com.thirdmono.grabilitest.data.entity.Entry;
+import com.thirdmono.grabilitest.domain.utils.Constants;
+import com.thirdmono.grabilitest.domain.utils.Utils;
+import com.thirdmono.grabilitest.presentation.details.DetailsContract;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -22,12 +28,21 @@ import butterknife.ButterKnife;
  * @author <a href="mailto:vmmzn20@gmail.com">Victor Maldonado</a>
  * @since 1.0
  */
-public class DetailsFragment extends Fragment implements AppDetailsContract.View {
+public class DetailsFragment extends Fragment implements DetailsContract.View {
 
     @Inject
-    AppDetailsContract.Presenter presenter;
+    DetailsContract.Presenter presenter;
 
-    private OnFragmentInteractionListener listener;
+    @BindView(R.id.item_icon)
+    ImageView itemIcon;
+    @BindView(R.id.item_artist)
+    TextView itemArtist;
+    @BindView(R.id.item_category)
+    TextView itemCategory;
+    @BindView(R.id.item_title)
+    TextView itemTitle;
+    @BindView(R.id.item_description)
+    TextView itemDescription;
 
     public DetailsFragment() {
     }
@@ -36,9 +51,12 @@ public class DetailsFragment extends Fragment implements AppDetailsContract.View
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupDependencyInjection();
-        if (getArguments() != null) {
 
-        }
+        Entry entry = (getArguments() != null && getArguments().containsKey(Constants.APP_SELECTED_KEY)) ?
+                Utils.valueOf(getArguments().getString(Constants.APP_SELECTED_KEY)) :
+                null;
+        presenter.setView(this);
+        presenter.setEntry(entry);
     }
 
     private void setupDependencyInjection() {
@@ -49,28 +67,54 @@ public class DetailsFragment extends Fragment implements AppDetailsContract.View
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
-        ButterKnife.bind(view);
+        ButterKnife.bind(this, view);
+        presenter.init();
         return view;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            listener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void registerConnectionBroadcastReceiver(BroadcastReceiver broadcastReceiver) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        listener = null;
+    public void unRegisterConnectionBroadcastReceiver(BroadcastReceiver broadcastReceiver) {
+        throw new UnsupportedOperationException();
     }
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void hideNoConnectionMessage() {
+        throw new UnsupportedOperationException();
     }
+
+    @Override
+    public void showNoConnectionMessage() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setTitle(String label) {
+        itemTitle.setText(label);
+    }
+
+    @Override
+    public void setArtist(String label) {
+        itemArtist.setText(label);
+    }
+
+    @Override
+    public void setCategory(String label) {
+        itemCategory.setText(label);
+    }
+
+    @Override
+    public void setDescription(String label) {
+        itemDescription.setText(label);
+    }
+
+    @Override
+    public void setIcon(String label) {
+        Picasso.with(getActivity()).load(label).into(itemIcon);
+    }
+
 }

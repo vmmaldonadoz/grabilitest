@@ -14,4 +14,7 @@
     <string name="categories">Categories</string>
     <string name="ok_button_label">Ok</string>
     <string name="choose_category">Choose category</string>
+    <string name="placeholder_category">Category</string>
+    <string name="show_more">Show more</string>
+    <string name="placeholder_description">Description</string>
 </resources>

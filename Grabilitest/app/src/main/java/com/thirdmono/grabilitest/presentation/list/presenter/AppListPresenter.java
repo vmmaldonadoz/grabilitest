@@ -4,15 +4,20 @@ package com.thirdmono.grabilitest.presentation.list.presenter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
+import com.thirdmono.grabilitest.R;
 import com.thirdmono.grabilitest.data.api.FreeAppsService;
 import com.thirdmono.grabilitest.data.entity.CategoryFilter;
 import com.thirdmono.grabilitest.data.entity.Entry;
 import com.thirdmono.grabilitest.data.entity.Feed;
 import com.thirdmono.grabilitest.data.entity.FeedWrapper;
-import com.thirdmono.grabilitest.domain.utils.NetworkUtils;
+import com.thirdmono.grabilitest.domain.utils.Constants;
+import com.thirdmono.grabilitest.domain.utils.Utils;
 import com.thirdmono.grabilitest.presentation.BaseView;
+import com.thirdmono.grabilitest.presentation.details.view.DetailsActivity;
+import com.thirdmono.grabilitest.presentation.details.view.DetailsFragment;
 import com.thirdmono.grabilitest.presentation.list.AppListContract;
 
 import java.util.ArrayList;
@@ -66,7 +71,19 @@ public class AppListPresenter implements AppListContract.Presenter {
 
     @Override
     public void onItemClicked(View view, Entry entry) {
-        this.view.openDetail();
+        if (this.view.getActivity().getResources().getBoolean(R.bool.tablet)) {
+            // Launch fragment
+            Bundle arguments = new Bundle();
+            arguments.putString(Constants.APP_SELECTED_KEY, Utils.toString(entry));
+            DetailsFragment fragment = new DetailsFragment();
+            fragment.setArguments(arguments);
+            this.view.mountFragment(fragment);
+        } else {
+            // Launch Activity
+            Intent intent = new Intent(this.view.getActivity(), DetailsActivity.class);
+            intent.putExtra(Constants.APP_SELECTED_KEY, Utils.toString(entry));
+            this.view.startActivity(intent);
+        }
     }
 
     @Override
@@ -110,7 +127,7 @@ public class AppListPresenter implements AppListContract.Presenter {
     public void setupConnectionBroadcastReceiver() {
         connectionBroadcastReceiver = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
-                if (NetworkUtils.hasNetwork(context)) {
+                if (Utils.hasNetwork(context)) {
                     view.hideNoConnectionMessage();
                 } else {
                     view.showNoConnectionMessage();

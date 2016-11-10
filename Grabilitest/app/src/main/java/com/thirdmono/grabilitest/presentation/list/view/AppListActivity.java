@@ -1,6 +1,7 @@
 package com.thirdmono.grabilitest.presentation.list.view;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,13 +22,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.thirdmono.grabilitest.AppStoreApplication;
 import com.thirdmono.grabilitest.R;
 import com.thirdmono.grabilitest.data.entity.CategoryFilter;
 import com.thirdmono.grabilitest.data.entity.Entry;
 import com.thirdmono.grabilitest.presentation.BaseActivity;
+import com.thirdmono.grabilitest.presentation.details.view.DetailsFragment;
 import com.thirdmono.grabilitest.presentation.list.AppListContract;
 import com.thirdmono.grabilitest.presentation.list.view.adapter.ItemAppAdapter;
 
@@ -116,7 +118,7 @@ public class AppListActivity extends BaseActivity implements AppListContract.Vie
 
     private void setupRecyclerViewWithApps() {
         if (getResources().getBoolean(R.bool.tablet)) {
-            GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+            GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerViewWithApps.setLayoutManager(layoutManager);
         } else {
@@ -126,6 +128,7 @@ public class AppListActivity extends BaseActivity implements AppListContract.Vie
         }
         appAdapter = new ItemAppAdapter(new ArrayList<Entry>(), this, this);
         recyclerViewWithApps.setAdapter(appAdapter);
+        recyclerViewWithApps.setItemAnimator(new DefaultItemAnimator());
     }
 
     private void setupToolbar() {
@@ -164,7 +167,7 @@ public class AppListActivity extends BaseActivity implements AppListContract.Vie
 
     @Override
     public void openDetail() {
-        Toast.makeText(this, "Opening details.", Toast.LENGTH_SHORT).show();
+//        presenter.
     }
 
     @Override
@@ -218,6 +221,19 @@ public class AppListActivity extends BaseActivity implements AppListContract.Vie
     public void showEmptyResponseMessage(CategoryFilter categoryFilter) {
         showRetrySnackbar(R.string.empty_response);
         updateTitle(categoryFilter);
+    }
+
+    @Override
+    public Context getActivity() {
+        return this;
+    }
+
+    @Override
+    public void mountFragment(DetailsFragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, fragment)
+                .commit();
     }
 
     private void showRetrySnackbar(@StringRes int message) {

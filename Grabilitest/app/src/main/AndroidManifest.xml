@@ -24,11 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.details.view.DetailsActivity"
+            android:theme="@style/NoActionBarTheme" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="55a0add5bf236764d7704355d82c5a04374fc48f" />
-    </application>
 
+    </application>
 
 </manifest>

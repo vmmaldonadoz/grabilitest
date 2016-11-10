@@ -6,8 +6,8 @@ import com.thirdmono.grabilitest.AppStoreApplication;
 import com.thirdmono.grabilitest.BuildConfig;
 import com.thirdmono.grabilitest.data.api.FreeAppsService;
 import com.thirdmono.grabilitest.domain.utils.Constants;
-import com.thirdmono.grabilitest.domain.utils.NetworkUtils;
-import com.thirdmono.grabilitest.presentation.details.AppDetailsContract;
+import com.thirdmono.grabilitest.domain.utils.Utils;
+import com.thirdmono.grabilitest.presentation.details.DetailsContract;
 import com.thirdmono.grabilitest.presentation.details.presenter.DetailsPresenter;
 import com.thirdmono.grabilitest.presentation.list.AppListContract;
 import com.thirdmono.grabilitest.presentation.list.presenter.AppListPresenter;
@@ -66,7 +66,7 @@ public class AppModule {
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
 
-                if (!NetworkUtils.hasNetwork(context)) {
+                if (!Utils.hasNetwork(context)) {
                     CacheControl cacheControl = new CacheControl.Builder()
                             .maxStale(2, TimeUnit.DAYS)
                             .build();
@@ -147,7 +147,7 @@ public class AppModule {
     }
 
     @Provides
-    public AppDetailsContract.Presenter provideDetailsPresenter() {
+    public DetailsContract.Presenter provideDetailsPresenter() {
         return new DetailsPresenter();
     }
 }

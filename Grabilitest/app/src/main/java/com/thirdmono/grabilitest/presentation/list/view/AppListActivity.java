@@ -1,10 +1,14 @@
 package com.thirdmono.grabilitest.presentation.list.view;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thirdmono.grabilitest.AppStoreApplication;
@@ -32,6 +36,9 @@ public class AppListActivity extends BaseActivity implements AppListContract.Vie
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.offline_message)
+    TextView offlineMessage;
+
     @BindView(R.id.recycler_with_apps)
     RecyclerView recyclerViewWithApps;
 
@@ -51,6 +58,7 @@ public class AppListActivity extends BaseActivity implements AppListContract.Vie
         presenter = new AppListPresenter();
         presenter.setView(this);
         presenter.getApplications(freeAppsService);
+        presenter.setupConnectionBroadcastReceiver();
     }
 
     private void setupRecyclerViewWithApps() {
@@ -102,5 +110,25 @@ public class AppListActivity extends BaseActivity implements AppListContract.Vie
     @Override
     public void updateListOfApplications(List<Entry> listOfApplications) {
         appAdapter.setItems(listOfApplications);
+    }
+
+    @Override
+    public void hideNoConnectionMessage() {
+        offlineMessage.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showNoConnectionMessage() {
+        offlineMessage.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void registerConnectionBroadcastReceiver(BroadcastReceiver broadcastReceiver) {
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    public void unRegisterConnectionBroadcastReceiver(BroadcastReceiver broadcastReceiver) {
+        unregisterReceiver(broadcastReceiver);
     }
 }

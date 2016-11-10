@@ -1,12 +1,16 @@
 package com.thirdmono.grabilitest.presentation.list.presenter;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import com.thirdmono.grabilitest.data.api.FreeAppsService;
 import com.thirdmono.grabilitest.data.entity.Entry;
 import com.thirdmono.grabilitest.data.entity.Feed;
 import com.thirdmono.grabilitest.data.entity.FeedWrapper;
+import com.thirdmono.grabilitest.domain.utils.NetworkUtils;
 import com.thirdmono.grabilitest.presentation.BaseView;
 import com.thirdmono.grabilitest.presentation.list.AppListContract;
 
@@ -26,17 +30,17 @@ import timber.log.Timber;
  */
 public class AppListPresenter implements AppListContract.Presenter {
 
-
     private AppListContract.View view;
+    private BroadcastReceiver connectionBroadcastReceiver;
 
     @Override
     public void resume() {
-
+        view.registerConnectionBroadcastReceiver(connectionBroadcastReceiver);
     }
 
     @Override
     public void pause() {
-
+        view.unRegisterConnectionBroadcastReceiver(connectionBroadcastReceiver);
     }
 
     @Override
@@ -72,6 +76,19 @@ public class AppListPresenter implements AppListContract.Presenter {
             }
 
         });
+    }
+
+    @Override
+    public void setupConnectionBroadcastReceiver() {
+        connectionBroadcastReceiver = new BroadcastReceiver() {
+            public void onReceive(Context context, Intent intent) {
+                if (NetworkUtils.hasNetwork(context)) {
+                    view.hideNoConnectionMessage();
+                } else {
+                    view.showNoConnectionMessage();
+                }
+            }
+        };
     }
 
     private List<Entry> getListOfApplications(FeedWrapper feedWrapper) {

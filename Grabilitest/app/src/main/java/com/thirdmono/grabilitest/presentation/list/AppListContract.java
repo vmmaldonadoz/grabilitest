@@ -1,5 +1,7 @@
 package com.thirdmono.grabilitest.presentation.list;
 
+import android.content.BroadcastReceiver;
+
 import com.thirdmono.grabilitest.data.api.FreeAppsService;
 import com.thirdmono.grabilitest.data.entity.Entry;
 import com.thirdmono.grabilitest.presentation.BasePresenter;
@@ -21,6 +23,8 @@ public interface AppListContract {
 
 
         void getApplications(FreeAppsService freeAppsService);
+
+        void setupConnectionBroadcastReceiver();
     }
 
     interface View extends BaseView {
@@ -28,5 +32,13 @@ public interface AppListContract {
         void openDetail();
 
         void updateListOfApplications(List<Entry> listOfApplications);
+
+        void hideNoConnectionMessage();
+
+        void showNoConnectionMessage();
+
+        void registerConnectionBroadcastReceiver(BroadcastReceiver broadcastReceiver);
+
+        void unRegisterConnectionBroadcastReceiver(BroadcastReceiver broadcastReceiver);
     }
 }

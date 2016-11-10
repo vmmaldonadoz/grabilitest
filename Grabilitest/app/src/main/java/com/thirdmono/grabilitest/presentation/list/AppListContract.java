@@ -2,7 +2,7 @@ package com.thirdmono.grabilitest.presentation.list;
 
 import android.content.BroadcastReceiver;
 
-import com.thirdmono.grabilitest.data.api.FreeAppsService;
+import com.thirdmono.grabilitest.data.entity.CategoryFilter;
 import com.thirdmono.grabilitest.data.entity.Entry;
 import com.thirdmono.grabilitest.presentation.BasePresenter;
 import com.thirdmono.grabilitest.presentation.BaseView;
@@ -21,8 +21,7 @@ public interface AppListContract {
 
         void onItemClicked(android.view.View view, Entry entry);
 
-
-        void getApplications(FreeAppsService freeAppsService);
+        void getApplicationsByCategory(CategoryFilter category);
 
         void setupConnectionBroadcastReceiver();
     }
@@ -31,7 +30,7 @@ public interface AppListContract {
 
         void openDetail();
 
-        void updateListOfApplications(List<Entry> listOfApplications);
+        void updateListOfApplications(List<Entry> listOfApplications, CategoryFilter categoryFilter);
 
         void hideNoConnectionMessage();
 
@@ -40,5 +39,9 @@ public interface AppListContract {
         void registerConnectionBroadcastReceiver(BroadcastReceiver broadcastReceiver);
 
         void unRegisterConnectionBroadcastReceiver(BroadcastReceiver broadcastReceiver);
+
+        void showErrorDuringRequestMessage();
+
+        void showEmptyResponseMessage(CategoryFilter categoryFilter);
     }
 }

@@ -21,7 +21,7 @@ public class LoggerTree extends Timber.Tree {
 
     @Override
     protected void log(int priority, @Nullable String tag, @Nullable String message, @Nullable Throwable throwable) {
-        if (priority == Log.VERBOSE || priority == Log.DEBUG || priority == Log.INFO) {
+        if (priority == Log.VERBOSE || priority == Log.DEBUG) {
             return;
         }
 

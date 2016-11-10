@@ -7,6 +7,12 @@ import com.thirdmono.grabilitest.BuildConfig;
 import com.thirdmono.grabilitest.data.api.FreeAppsService;
 import com.thirdmono.grabilitest.domain.utils.Constants;
 import com.thirdmono.grabilitest.domain.utils.NetworkUtils;
+import com.thirdmono.grabilitest.presentation.details.AppDetailsContract;
+import com.thirdmono.grabilitest.presentation.details.presenter.DetailsPresenter;
+import com.thirdmono.grabilitest.presentation.list.AppListContract;
+import com.thirdmono.grabilitest.presentation.list.presenter.AppListPresenter;
+import com.thirdmono.grabilitest.presentation.splash.SplashContract;
+import com.thirdmono.grabilitest.presentation.splash.presenter.SplashPresenter;
 
 import java.io.File;
 import java.io.IOException;
@@ -128,5 +134,20 @@ public class AppModule {
     @Provides
     public FreeAppsService provideBookService(Retrofit retrofit) {
         return retrofit.create(FreeAppsService.class);
+    }
+
+    @Provides
+    public SplashContract.Presenter provideSplashPresenter() {
+        return new SplashPresenter();
+    }
+
+    @Provides
+    public AppListContract.Presenter provideAppListPresenter(FreeAppsService appsService) {
+        return new AppListPresenter(appsService);
+    }
+
+    @Provides
+    public AppDetailsContract.Presenter provideDetailsPresenter() {
+        return new DetailsPresenter();
     }
 }

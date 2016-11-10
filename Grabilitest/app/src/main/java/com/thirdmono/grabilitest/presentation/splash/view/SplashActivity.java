@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.thirdmono.grabilitest.AppStoreApplication;
 import com.thirdmono.grabilitest.R;
 import com.thirdmono.grabilitest.presentation.BaseActivity;
 import com.thirdmono.grabilitest.presentation.list.view.AppListActivity;
 import com.thirdmono.grabilitest.presentation.splash.SplashContract;
-import com.thirdmono.grabilitest.presentation.splash.presenter.SplashPresenter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +26,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     @BindView(R.id.splash_logo)
     ImageView splashLogo;
 
+    @Inject
     SplashContract.Presenter presenter;
 
     @Override
@@ -31,7 +34,8 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        presenter = new SplashPresenter();
+        setupDependencyInjection();
+
         presenter.setView(this);
         presenter.setupAnimation();
     }
@@ -55,7 +59,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     }
 
     @Override
-    public void gotoMainActivity() {
+    public void gotoAppListActivity() {
         startActivity(new Intent(SplashActivity.this, AppListActivity.class));
         finish();
     }
@@ -64,5 +68,9 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     public void animateLogo(float mappedValue) {
         splashLogo.setScaleX(mappedValue);
         splashLogo.setScaleY(mappedValue);
+    }
+
+    private void setupDependencyInjection() {
+        ((AppStoreApplication) getApplication()).getAppComponent().inject(this);
     }
 }

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.thirdmono.grabilitest.data.api.FreeAppsService;
+import com.thirdmono.grabilitest.data.entity.CategoryFilter;
 import com.thirdmono.grabilitest.data.entity.Entry;
 import com.thirdmono.grabilitest.data.entity.Feed;
 import com.thirdmono.grabilitest.data.entity.FeedWrapper;
@@ -16,6 +17,8 @@ import com.thirdmono.grabilitest.presentation.list.AppListContract;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,8 +33,15 @@ import timber.log.Timber;
  */
 public class AppListPresenter implements AppListContract.Presenter {
 
+    private final FreeAppsService freeAppsService;
     private AppListContract.View view;
     private BroadcastReceiver connectionBroadcastReceiver;
+    private CategoryFilter categoryFilter;
+
+    @Inject
+    public AppListPresenter(FreeAppsService appsService) {
+        this.freeAppsService = appsService;
+    }
 
     @Override
     public void resume() {
@@ -45,7 +55,8 @@ public class AppListPresenter implements AppListContract.Presenter {
 
     @Override
     public void destroy() {
-
+        connectionBroadcastReceiver = null;
+        categoryFilter = null;
     }
 
     @Override
@@ -59,20 +70,37 @@ public class AppListPresenter implements AppListContract.Presenter {
     }
 
     @Override
-    public void getApplications(FreeAppsService freeAppsService) {
-        freeAppsService.getFreeApplicationsByCategory("").enqueue(new Callback<FeedWrapper>() {
+    public void getApplicationsByCategory(CategoryFilter category) {
+        String id = "";
+        if (category == null) {
+            if (categoryFilter != null) {
+                id = categoryFilter.getId();
+            }
+        } else {
+            categoryFilter = category;
+            id = category.getId();
+        }
+        freeAppsService.getFreeApplicationsByCategory(id).enqueue(new Callback<FeedWrapper>() {
             @Override
             public void onResponse(Call<FeedWrapper> call, Response<FeedWrapper> response) {
                 Timber.d("Got some feed back!");
                 if (response.isSuccessful()) {
-                    view.updateListOfApplications(getListOfApplications(response.body()));
-                    Timber.i("Books data was loaded from API.");
+
+                    List<Entry> entries = getListOfApplications(response.body());
+                    if (entries.isEmpty()) {
+                        view.showEmptyResponseMessage(categoryFilter);
+                        Timber.i("Empty response from API.");
+                    } else {
+                        view.updateListOfApplications(entries, categoryFilter);
+                        Timber.i("Apps data was loaded from API.");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<FeedWrapper> call, Throwable t) {
                 Timber.e(t, "Failed to get feed!");
+                view.showErrorDuringRequestMessage();
             }
 
         });

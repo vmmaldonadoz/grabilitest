@@ -11,6 +11,8 @@ import com.facebook.rebound.SpringUtil;
 import com.thirdmono.grabilitest.presentation.BaseView;
 import com.thirdmono.grabilitest.presentation.splash.SplashContract;
 
+import javax.inject.Inject;
+
 /**
  * Presenter for the Splash.
  *
@@ -24,14 +26,8 @@ public class SplashPresenter implements SplashContract.Presenter {
     private SpringSystem springSystem;
     private SplashContract.View view;
 
-    private void addDelay() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                view.gotoMainActivity();
-            }
-        }, 1000);
+    @Inject
+    public SplashPresenter() {
     }
 
     @Override
@@ -46,7 +42,6 @@ public class SplashPresenter implements SplashContract.Presenter {
 
     @Override
     public void destroy() {
-        this.view = null;
         if (spring != null) {
             spring.removeAllListeners();
         }
@@ -80,4 +75,13 @@ public class SplashPresenter implements SplashContract.Presenter {
         addDelay();
     }
 
+    private void addDelay() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                view.gotoAppListActivity();
+            }
+        }, 1000);
+    }
 }

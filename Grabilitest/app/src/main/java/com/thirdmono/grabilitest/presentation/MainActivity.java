@@ -1,7 +1,6 @@
 package com.thirdmono.grabilitest.presentation;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.thirdmono.grabilitest.AppStoreApplication;
 import com.thirdmono.grabilitest.R;
@@ -17,7 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Inject
     FreeAppsService freeAppsService;

@@ -12,7 +12,7 @@ public class CategoryFilter {
     private String name;
 
     public CategoryFilter() {
-        this.id = "";
+        this.id = "All";
         this.name = "All";
     }
 

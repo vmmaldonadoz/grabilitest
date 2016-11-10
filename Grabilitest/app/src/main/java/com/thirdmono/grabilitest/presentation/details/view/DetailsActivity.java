@@ -75,6 +75,24 @@ public class DetailsActivity extends BaseActivity implements DetailsContract.Vie
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        presenter.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.destroy();
+        super.onDestroy();
+    }
+
+    @Override
     public void registerConnectionBroadcastReceiver(BroadcastReceiver broadcastReceiver) {
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }

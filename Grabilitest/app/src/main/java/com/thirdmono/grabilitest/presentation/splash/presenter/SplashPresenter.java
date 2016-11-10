@@ -10,7 +10,6 @@ import com.facebook.rebound.SpringSystem;
 import com.facebook.rebound.SpringUtil;
 import com.thirdmono.grabilitest.presentation.BaseView;
 import com.thirdmono.grabilitest.presentation.splash.SplashContract;
-import com.thirdmono.grabilitest.presentation.splash.SplashContract.Presenter;
 
 /**
  * Presenter for the Splash.
@@ -18,7 +17,7 @@ import com.thirdmono.grabilitest.presentation.splash.SplashContract.Presenter;
  * @author <a href="mailto:vmmzn20@gmail.com">Victor Maldonado</a>
  * @since 1.0
  */
-public class SplashPresenter implements Presenter {
+public class SplashPresenter implements SplashContract.Presenter {
 
     private SpringListener springListener;
     private Spring spring;

@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import com.thirdmono.grabilitest.R;
 import com.thirdmono.grabilitest.presentation.BaseActivity;
-import com.thirdmono.grabilitest.presentation.MainActivity;
+import com.thirdmono.grabilitest.presentation.list.view.AppListActivity;
 import com.thirdmono.grabilitest.presentation.splash.SplashContract;
 import com.thirdmono.grabilitest.presentation.splash.presenter.SplashPresenter;
 
@@ -49,8 +49,14 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     }
 
     @Override
+    protected void onDestroy() {
+        presenter.destroy();
+        super.onDestroy();
+    }
+
+    @Override
     public void gotoMainActivity() {
-        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        startActivity(new Intent(SplashActivity.this, AppListActivity.class));
         finish();
     }
 
